@@ -1,0 +1,41 @@
+/* Dark operations console styling, scoped to the Live Camera page. */
+.live-panel { overflow: hidden; }
+.live-state { display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0; font-size: 12px; font-weight: 700; color: #cfdbeb; background: #29374b; border: 1px solid #4d617d; border-radius: 999px; padding: 8px 12px; }
+.live-state-dot { display: inline-block; width: 8px; height: 8px; background: #94a3b8; border-radius: 50%; }
+.live-state-monitoring { color: #abefd2; border-color: #347a65; background: #173e36; }
+.live-state-monitoring .live-state-dot { background: #4ce3a7; }
+.live-state-starting .live-state-dot, .live-state-connecting .live-state-dot { background: #f9c76b; }
+.live-state-interrupted { color: #ffc2b8; border-color: #80515a; background: #452d35; }
+.live-state-interrupted .live-state-dot { background: #ff8a79; }
+.live-camera-frame { position: relative; margin: 0 22px; overflow: hidden; background: #080f1b; border: 1px solid #40516b; border-radius: 13px; min-height: 300px; aspect-ratio: 16 / 9; display: grid; align-items: center; }
+.live-video { display: block; width: 100%; height: 100%; object-fit: contain; position: absolute; inset: 0; background: #080f1b; }
+.live-overlay { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.live-overlay rect { fill: none; stroke-width: 2px; vector-effect: non-scaling-stroke; }
+.live-overlay text { font-family: 'Fira Sans', Arial, sans-serif; font-size: 15px; font-weight: 700; paint-order: stroke fill; stroke: #0c1420; stroke-width: 3px; }
+.live-fire-box rect { stroke: #ff6d62; }
+.live-fire-box text { fill: #ffaaa3; }
+.live-smoke-box rect { stroke: #ffbf62; }
+.live-smoke-box text { fill: #ffd398; }
+.live-camera-placeholder { z-index: 1; display: grid; gap: 8px; justify-items: center; color: #b9cde1; text-align: center; padding: 40px 15px; }
+.live-camera-placeholder svg { color: #7991ac; }
+.live-camera-placeholder strong { color: #e8f2ff; font-size: 16px; }
+.live-camera-placeholder span { font-size: 13px; }
+.live-camera-connecting { position: absolute; z-index: 2; left: 16px; bottom: 16px; padding: 8px 12px; font-size: 12px; background: #1e293bdd; border: 1px solid #435675; border-radius: 9px; color: #f0f5fc; }
+.live-controls { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 20px 22px; }
+.live-control-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.live-control-actions .button { min-height: 44px; }
+.live-privacy-note { color: var(--muted); display: inline-flex; align-items: center; gap: 7px; font-size: 12px; }
+.live-error { margin: 0 22px 20px; }
+.live-stats { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 14px; margin-top: 18px; }
+.live-stat { padding: 20px; display: flex; flex-direction: column; min-width: 0; }
+.live-stat span { color: #c6d5e8; font-size: 12px; }
+.live-stat strong { color: #f6f9ff; font-size: 31px; font-weight: 700; margin: 10px 0; font-variant-numeric: tabular-nums; }
+.live-stat strong.text-danger { color: #ffaba3; }
+.live-stat strong.text-amber { color: #ffd28e; }
+.live-stat small { font-size: 11px; color: #aabbcf; line-height: 1.5; }
+.live-interruption { color: #ffbfb2; display: flex; align-items: center; gap: 10px; font-size: 13px; }
+@media (max-width: 1200px) { .live-stats { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (max-width: 800px) { .live-camera-frame { margin: 0 15px; min-height: 220px; } .live-controls { padding: 16px; } }
+@media (max-width: 540px) { .live-panel .panel-header { flex-direction: column; align-items: flex-start; gap: 10px; } .live-stats { gap: 10px; } .live-stat { padding: 13px; } .live-stat strong { font-size: 25px; } .live-control-actions { width: 100%; } .live-control-actions .button { flex: 1; justify-content: center; } .live-camera-frame { min-height: 205px; } }
+/* Match the overlay to the real camera aspect ratio at any screen width. */
+.live-camera-frame[style] { min-height: 0; }

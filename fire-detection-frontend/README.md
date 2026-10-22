@@ -23,14 +23,15 @@ Open http://localhost:5173 in a browser.
 
 ## API wiring
 
-The Vite development proxy maps /api/* to the FastAPI backend without
-changing the backend or enabling a broad CORS policy.
+The Vite development proxy maps REST API and live WebSocket traffic to the
+FastAPI backend without enabling a broad CORS policy.
 
 - GET /api/ -> GET /
 - GET /api/incidents?limit=50 -> GET /incidents?limit=50
 - POST /api/predict/image -> POST /predict/image
 - POST /api/predict/video -> POST /predict/video
 - GET /api/videos/{uuid} -> GET /videos/{uuid}
+- WS /ws/live -> WS /ws/live
 
 Make sure FastAPI is running before opening the frontend. The proxy works
 only in Vite development. Production deployment needs an equivalent proxy
@@ -42,6 +43,8 @@ or an explicitly configured API URL and CORS policy.
 - Image prediction upload; bounding boxes overlaid on original image
 - Video upload; alert summary and processed-video download link
 - Incident history; filter by alert type and refresh
+- Live Camera route (`#live`); manual webcam start/stop, local WebSocket
+  inference, bounding boxes, confidence labels, connection status, and errors
 - Honest safety labels: recorded-media prototype, not live surveillance
 
 ## Known MVP limitations
@@ -54,4 +57,8 @@ or an explicitly configured API URL and CORS policy.
   all browsers; downloaded results can be opened in a player like VLC.
 - Incident list only loads up to 50 most recent records, so displayed
   counts are for the loaded history, not the full database.
-- No authentication, real-time CCTV capture or safety-certified controls.
+- Live Camera is intended for local development at `http://localhost:5173` or
+  `http://127.0.0.1:5173`. It requires browser camera permission and a running
+  backend. The browser sends JPEG frames to the FastAPI WebSocket; frames are
+  not saved and live detections do not create SQLite incidents.
+- No authentication, remote CCTV capture, or safety-certified controls.

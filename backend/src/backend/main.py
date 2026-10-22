@@ -18,6 +18,8 @@ from .database import (
     get_incidents,
 )
 
+from .live import router as live_router
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -31,6 +33,7 @@ app = FastAPI(
 )
 MAX_IMAGE_BYTES = 10 * 1024 * 1024
 
+app.include_router(live_router)
 
 @app.get("/")
 def home():

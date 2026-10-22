@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useState, type ChangeEvent, type FormEvent } from 'react';
+import LiveCamera from './LiveCamera';
 import {
   Activity,
   AlertCircle,
   ArrowDownToLine,
   ArrowRight,
   BellRing,
+  Camera,
   CheckCircle2,
   Clock3,
   Database,
@@ -20,7 +22,7 @@ import {
   Wind,
 } from 'lucide-react';
 
-type Page = 'overview' | 'analyze' | 'incidents';
+type Page = 'overview' | 'analyze' | 'live' | 'incidents';
 type MediaMode = 'image' | 'video';
 type ApiStatus = 'checking' | 'online' | 'offline';
 
@@ -76,12 +78,13 @@ type AnalysisResult =
 const NAV_ITEMS = [
   { id: 'overview' as Page, label: 'Overview', Icon: LayoutDashboard },
   { id: 'analyze' as Page, label: 'Analyze media', Icon: Activity },
+  { id: 'live' as Page, label: 'Live Camera', Icon: Camera },
   { id: 'incidents' as Page, label: 'Incident history', Icon: Database },
 ];
 
 function pageFromHash(): Page {
   const name = window.location.hash.replace('#', '');
-  return name === 'analyze' || name === 'incidents' ? name : 'overview';
+  return name === 'analyze' || name === 'live' || name === 'incidents' ? name : 'overview';
 }
 
 function percent(value: number): string {
@@ -321,7 +324,7 @@ export default function App() {
         <header className="topbar">
           <div className="breadcrumbs"><span>Workspace</span><span className="breadcrumb-sep">/</span><strong>{NAV_ITEMS.find((item) => item.id === page)?.label}</strong></div>
           <div className="topbar-statuses">
-            <span className="pill muted-pill">Uploaded media only</span>
+            <span className="pill muted-pill">{page === 'live' ? 'Local live camera' : 'Uploaded media'}</span>
             <span className={`pill api-pill ${apiStatus}`} role="status">
               <span className="status-dot" />
               {apiStatus === 'online' ? 'API connected' : apiStatus === 'checking' ? 'Connecting...' : 'API unavailable'}
@@ -345,7 +348,7 @@ export default function App() {
 
               <div className="notice" role="note">
                 <AlertCircle size={20} aria-hidden="true" />
-                <div><strong>Academic prototype - not live monitoring</strong><span>The dashboard reflects uploaded video analyses. No live camera or gas-leak sensing is connected.</span></div>
+                <div><strong>Academic prototype - not live monitoring</strong><span>The dashboard reflects uploaded video analyses. Use Live Camera for a local webcam test; no gas-leak sensing is connected.</span></div>
               </div>
 
               <div className="metric-grid">
@@ -461,6 +464,8 @@ export default function App() {
               )}
             </>
           )}
+
+          {page === 'live' && <LiveCamera />}
 
           {page === 'incidents' && (
             <>

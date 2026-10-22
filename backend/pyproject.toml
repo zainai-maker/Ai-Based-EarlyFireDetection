@@ -12,7 +12,7 @@ dependencies = [
     "opencv-python>=5.0.0.93",
     "python-multipart>=0.0.32",
     "ultralytics>=8.4.183",
-    "uvicorn>=0.54.0",
+    "uvicorn[standard]>=0.54.0",
 ]
 
 [project.scripts]
